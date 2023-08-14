@@ -1,27 +1,28 @@
 ﻿@model Category //data is sent from view to controller need to be captured
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Delete";
 }
 
 @*form method is post since client is posting data*@
-<form method="post">
+@*Even if we do not define which controller and action to post it will find on basis of which get it was loaded*@
+
+<form method="post" asp-action="Delete">-
     <div class="border p-3 mt-4">
+        @*We want to pass Id and rest are disabled so need to create this hidden id field*@
+        <input asp-for="Id" hidden/>
         <div row pb-2>
-            <h2 class="text-primary">Create Category</h2>
+            <h2 class="text-primary">Delete Category</h2>
             <hr />
         </div>
-        <div asp-validation-summary="All"></div>
         <div class="mb-3">
             <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control"/>
-            <span asp-validation-for="Name" class="text-danger"></span>
+            <input asp-for="Name" disabled class="form-control" />
         </div>
         <div class="mb-3">
             <label asp-for="DisplayOrder"></label>
-            <input asp-for="DisplayOrder" class="form-control" />
-            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            <input asp-for="DisplayOrder" disabled class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+        <button type="submit" id="delete" class="btn btn-danger" style="width:150px">Delete</button>
         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">
             Back to List
         </a>
@@ -29,7 +30,7 @@
 </form>
 
 @section Scripts
-{
+    {
     @{
         //client side validation
         <partial name="_ValidationScriptsPartial"></partial>

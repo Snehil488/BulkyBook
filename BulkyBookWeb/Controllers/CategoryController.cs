@@ -41,10 +41,87 @@ namespace BulkyBookWeb.Controllers
             { 
                 db.Categories.Add(category);
                 db.SaveChanges();
+                TempData["success"] = "Added successfully";
                 return RedirectToAction("Index");
             }
 
             return View();
         }
+
+        //Get
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var category = db.Categories.Find(id);
+
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        //Post
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            //Add custom model validation
+            if (category.Name == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("CustomError", "Name and Display order can not be same");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Categories.Update(category);
+                db.SaveChanges();
+                TempData["success"] = "Updated successfully";
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        //Get
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var category = db.Categories.Find(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        //Post
+        //Since same nameand signature need to explicitly give name
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = db.Categories.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            db.Categories.Remove(obj);
+            db.SaveChanges();
+            TempData["success"] = "Deleted successfully";
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -1,19 +1,20 @@
 ﻿@model Category //data is sent from view to controller need to be captured
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 @*form method is post since client is posting data*@
-<form method="post">
+@*Even if we do not define which controller and action to post it will find on basis of which get it was loaded*@
+<form method="post" asp-action="Edit">
     <div class="border p-3 mt-4">
         <div row pb-2>
-            <h2 class="text-primary">Create Category</h2>
+            <h2 class="text-primary">Edit Category</h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
             <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control"/>
+            <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="mb-3">
@@ -21,7 +22,7 @@
             <input asp-for="DisplayOrder" class="form-control" />
             <span asp-validation-for="DisplayOrder" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">
             Back to List
         </a>
@@ -29,7 +30,7 @@
 </form>
 
 @section Scripts
-{
+    {
     @{
         //client side validation
         <partial name="_ValidationScriptsPartial"></partial>
